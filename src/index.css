@@ -1,0 +1,192 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans:
+    'Noto Sans JP', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+
+  --color-paper: #fafafa;
+  --color-surface: #ffffff;
+  --color-line: #e8e5e2;
+  --color-ink: #1c1917;
+  --color-muted: #78716c;
+  --color-vermilion: #d4553d;
+  --color-vermilion-dark: #b13f2b;
+  --color-moss: #5b7a4a;
+
+  --shadow-card:
+    0 1px 2px rgb(28 25 23 / 0.04), 0 18px 40px -28px rgb(28 25 23 / 0.25);
+  --shadow-lift:
+    0 2px 4px rgb(28 25 23 / 0.04), 0 24px 48px -24px rgb(28 25 23 / 0.22);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'palt' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+
+  ::selection {
+    background: rgb(212 85 61 / 0.18);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(79 70 229 / 0.55);
+    outline-offset: 2px;
+  }
+}
+
+/* Quadratic paper texture, kept barely visible. */
+.app-texture {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgb(28 25 23 / 0.055) 0.6px,
+    transparent 0.6px
+  );
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 62%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 62%);
+  opacity: 0.55;
+}
+
+ruby {
+  ruby-position: over;
+}
+
+/* Burmese script needs its own font and a taller line box for stacked glyphs. */
+.lang-my {
+  font-family: 'Noto Sans Myanmar', 'Noto Sans JP', ui-sans-serif, system-ui,
+    sans-serif;
+  line-height: 1.85;
+}
+
+rt {
+  font-size: 0.42em;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #78716c;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: #f0edeb;
+  border-radius: 0.5rem;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.65),
+    transparent
+  );
+  animation: shimmer 1.6s infinite;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #d6d3d1 transparent;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 180ms ease-out both;
+}
+
+.animate-slide-in {
+  animation: slide-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-modal-in {
+  animation: modal-in 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-toast-in {
+  animation: toast-in 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
