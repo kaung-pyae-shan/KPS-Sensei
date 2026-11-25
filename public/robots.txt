@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://kps-sensei.vercel.app/sitemap.xml
